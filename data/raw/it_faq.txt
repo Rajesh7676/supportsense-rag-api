@@ -1,0 +1,13 @@
+Title: IT Helpdesk FAQ
+
+VPN Issues:
+- If VPN is not connecting, restart your laptop and try again.
+- If the issue persists, raise a ticket on the IT portal.
+
+Laptop Replacement:
+- Laptops older than 3 years are eligible for replacement.
+- Raise a hardware request and your manager must approve it.
+
+Password Reset:
+- Use the self-service password reset portal.
+- If locked out, call the IT helpdesk.
