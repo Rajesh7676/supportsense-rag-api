@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from pathlib import Path
 import sys
+import os
 
 # Ensure project root is on sys.path so imports work
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -16,9 +17,14 @@ app = FastAPI(title="SupportSense RAG API")
 # Initialize RAG pipeline once
 rag = RAGPipeline()
 
-# Ingest documents on startup (simple version)
-docs = load_raw_documents()
-rag.ingest(docs)
+# Ingest only if vector store doesn't exist yet
+CHROMA_STORE = PROJECT_ROOT / "chroma_store"
+if not CHROMA_STORE.exists():
+    print("Vector store not found — ingesting documents...")
+    docs = load_raw_documents()
+    rag.ingest(docs)
+else:
+    print("Vector store found — skipping ingestion.")
 
 
 class AskRequest(BaseModel):
@@ -47,5 +53,5 @@ def ask(req: AskRequest):
     return AskResponse(
         answer=result["answer"],
         question=req.question,
-        context=result["prompt"],  # you can change to just context if you want
+        context=result["prompt"],
     )
